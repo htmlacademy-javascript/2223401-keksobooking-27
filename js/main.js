@@ -1,3 +1,6 @@
+const min=1;
+const max=2;
+const maxDigits=1;
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
