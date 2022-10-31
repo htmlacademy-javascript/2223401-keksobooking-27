@@ -35,12 +35,11 @@ const photos = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
-];
-// Функции нахождения случайных элементов 
+]; 
 const getRandomPositiveInteger = (a, b) => {
   if (a < 0 || b < 0) {
     return NaN;
-  }
+  };
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
   const result = Math.random() * (upper - lower + 1) + lower;
@@ -89,8 +88,9 @@ const createAdvert = () => {
       checkout: getRandomArrayElement(checkin),
       features: createFeatures(),
       description: getRandomArrayElement(description),
-      photos: Array.from({ length: getRandomPositiveInteger(photos) },
-        (_, photoIndex) => createPhotos(photoIndex + 1)),
+      photos: Array.from({ length: getRandomPositiveInteger(1, 2)}, () =>
+        getRandomArrayElement(photos)
+      ).join(''),
     },
     location: {
       lat: randomx,
@@ -103,4 +103,4 @@ const getAdverts = () =>
   Array.from({ length: count }, (_, advertIndex) =>
     createAdvert(advertIndex + 1)
   );
-getAdverts;
+getAdverts();
