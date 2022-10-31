@@ -36,10 +36,6 @@ const photos = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
-const location = [
-  'lat',
-  'lng',
-];
 // Функции нахождения случайных элементов 
 const getRandomPositiveInteger = (a, b) => {
   if (a < 0 || b < 0) {
@@ -53,7 +49,7 @@ const getRandomPositiveInteger = (a, b) => {
 function getRandomPositiveFloat(a, b, digits = 1) {
   if (a < 0 || b < 0 || digits < 0) {
     return NaN;
-  }
+  };
   const lower = Math.min(a, b);
   const upper = Math.max(a, b);
   const result = Math.random() * (upper - lower) + lower;
@@ -67,7 +63,7 @@ const createAuthor = () => {
   }
   return {
     avatar: `img/avatars/users${getRandomPositiveInteger(1, count)}.png`,
-  }
+  };
 };
 // Функция генерации features, массив строк — массив случайной длины из значений
 const createFeatures = () =>
@@ -93,7 +89,7 @@ const createAdvert = () => {
       checkout: getRandomArrayElement(checkin),
       features: createFeatures(),
       description: getRandomArrayElement(description),
-      photos: Array.from({ length: getRandomPositiveInteger(0, 3) },
+      photos: Array.from({ length: getRandomPositiveInteger(photos) },
         (_, photoIndex) => createPhotos(photoIndex + 1)),
     },
     location: {
@@ -102,10 +98,9 @@ const createAdvert = () => {
     },
   };
 };
-
 // Функция генерации 10-ти случайных объявлений
 const getAdverts = () =>
   Array.from({ length: count }, (_, advertIndex) =>
     createAdvert(advertIndex + 1)
   );
-getAdverts();
+getAdverts;
