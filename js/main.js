@@ -1,4 +1,4 @@
-const avatars_count = 10;
+const count = 10;
 const title = [
   'Уютный номер у моря',
   'Горячее предложение месяца',
@@ -60,30 +60,31 @@ function getRandomPositiveFloat(a, b, digits = 1) {
   return +result.toFixed(digits);
 };
 const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
-// Фугкция создания ссылки на изображение (аватарку)
+// Функция создания ссылки на изображение (аватарку)
 const createAuthor = () => {
-  if (getRandomPositiveInteger(1, avatars_count) < avatars_count) {
-    return `img/avatars/users0${getRandomPositiveInteger(1, avatars_count)}.png`;
+  if (getRandomPositiveInteger(1, count) < count) {
+    return `img/avatars/users0${getRandomPositiveInteger(1, count)}.png`;
   }
   return {
-    avatar: `img/avatars/users${getRandomPositiveInteger(1, avatars_count)}.png`,
+    avatar: `img/avatars/users${getRandomPositiveInteger(1, count)}.png`,
   }
 };
+// Функция генерации features, массив строк — массив случайной длины из значений
 const createFeatures = () =>
   Array.from({ length: getRandomPositiveInteger(1, 2, 3, 4, 5, 6) }, () =>
     getRandomArrayElement(features)
   ).join('');
 // Функция создания одного объявления
 const createAdvert = () => {
-  const lat_x = getRandomPositiveFloat(48.00000, 36.56000, 6);
-  const lng_y = getRandomPositiveFloat(54.00000, 39.48000, 6);
+  const randomx = getRandomPositiveFloat(48.00000, 36.56000, 6);
+  const randomy = getRandomPositiveFloat(54.00000, 39.48000, 6);
   return {
     author: {
       avatar: createAuthor(),
     },
     offer: {
       title: getRandomArrayElement(title),
-      address: `${lat_x}, ${lng_y}`,
+      address: `${randomx}, ${randomy}`,
       price: getRandomPositiveInteger(1000, 100000000),
       type: getRandomArrayElement(type),
       rooms: getRandomPositiveInteger(1, 15),
@@ -96,15 +97,15 @@ const createAdvert = () => {
         (_, photoIndex) => createPhotos(photoIndex + 1)),
     },
     location: {
-      lat: lat_x,
-      lng: lng_y,
+      lat: randomx,
+      lng: randomy,
     },
   };
 };
 
 // Функция генерации 10-ти случайных объявлений
 const getAdverts = () =>
-  Array.from({ length: avatars_count }, (_, advertIndex) =>
+  Array.from({ length: count }, (_, advertIndex) =>
     createAdvert(advertIndex + 1)
   );
 getAdverts();
