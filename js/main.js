@@ -99,8 +99,5 @@ const createAdvert = () => {
   };
 };
 // Функция генерации 10-ти случайных объявлений
-const getAdverts = () =>
-  Array.from({ length: count }, (_, advertIndex) =>
-    createAdvert(advertIndex + 1)
-  );
+const getAdverts = new Array(count).fill(null).map(() => createAdvert());
 getAdverts;
