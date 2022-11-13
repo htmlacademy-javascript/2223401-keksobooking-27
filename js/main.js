@@ -1,2 +1,1 @@
-import { getAdverts } from './data.js';
-getAdverts();
+import './ads.js';
