@@ -80,7 +80,8 @@ const provideAd = (element) => {
 
 // Отрисовка, начиная с [0] сгенерированного DOM-элемента в блок #map-canvas
 const map = document.querySelector('#map-canvas');
-map.appendChild(provideAd(getAdverts[0]));
+const adv = getAdverts();
+map.append(provideAd(adv[0]));// или appendChild
 
 export {
   provideAd
