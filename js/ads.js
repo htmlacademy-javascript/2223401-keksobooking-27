@@ -11,7 +11,6 @@ const TYPES_OF_HOUSE = {
 };
 const adsTemplate = document.querySelector('#card').content;
 const mapAd = adsTemplate.querySelector('.popup');
-
 const provideFeatures = (items, container) => {
   if (items) {
     container.innerHTML = '';
