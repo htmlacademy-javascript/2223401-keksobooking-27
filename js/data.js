@@ -42,21 +42,20 @@ const photos = [
 // Функция создания ссылки на изображение (аватарку)
 const createAuthor = () => {
   if (getRandomPositiveInteger(1, count) < count) {
-    return `img/avatars/users0${getRandomPositiveInteger(1, count)}.png`;
+    return `img/avatars/user0${getRandomPositiveInteger(1, count)}.png`;
   }
   return {
-    avatar: `img/avatars/users${getRandomPositiveInteger(1, count)}.png`,
+    avatar: `img/avatars/user${getRandomPositiveInteger(1, count)}.png`,
   };
 };
 // Функция генерации features, массив строк — массив случайной длины из значений
 const createFeatures = () =>
-  Array.from({ length: getRandomPositiveInteger(1, 2, 3, 4, 5, 6) }, () =>
-    getRandomArrayElement(features)
-  ).join('');
+  Array.from({ length: getRandomPositiveInteger(1, 5) }, () =>
+    getRandomArrayElement(features));
 // Функция создания одного объявления
 const createAdvert = () => {
-  const randomx = getRandomPositiveFloat(48.00000, 36.56000, 6);
-  const randomy = getRandomPositiveFloat(54.00000, 39.48000, 6);
+  const randomx = getRandomPositiveFloat(48.00000, 36.56000, 5);
+  const randomy = getRandomPositiveFloat(54.00000, 39.48000, 5);
   return {
     author: {
       avatar: createAuthor(),
@@ -74,7 +73,7 @@ const createAdvert = () => {
       description: getRandomArrayElement(description),
       photos: Array.from({ length: getRandomPositiveInteger(1, 2) }, () =>
         getRandomArrayElement(photos)
-      ).join(''),
+      ),
     },
     location: {
       lat: randomx,
