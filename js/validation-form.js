@@ -24,7 +24,7 @@ const guestsToRooms = {
   2: ['1', '2'],
   3: ['3'],
 };
-
+const maxPrice=100000;
 // Переменная элемента количества мест, которая находится в форме и имеет соответствующее name
 const capacityElement = adForm.querySelector('#capacity');
 // Переменная элемента количества комнат, которая находится в форме и имеет соответствующее name
@@ -92,8 +92,8 @@ const getPriceChange = () => {
 
   if (price < minPrice) {
     priceForm.setCustomValidity(`Стоимость должна быть не ниже ${minPrice}`);
-  } else if (price > 1000000) {
-    priceForm.setCustomValidity(`Стоимость должна быть не выше 1000000`);
+  } else if (price > maxPrice) {
+    priceForm.setCustomValidity(`Стоимость должна быть не выше ${maxPrice}`);
   } else {
     priceForm.setCustomValidity('');
   }
