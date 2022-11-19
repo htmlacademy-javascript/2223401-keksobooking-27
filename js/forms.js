@@ -41,5 +41,3 @@ const activePage = () => {
 activePage();
 
 export { notactivePage, activePage, adForm };
-
-

@@ -66,7 +66,7 @@ const onRoomNumberChange = () => {
   pristine.validate(capacityElement);
   pristine.validate(roomNumberElement);
 };
-// Пристин отработка валидации 
+// Пристин отработка валидации
 pristine.addValidator(
   capacityElement,
   validateCapacity,
@@ -127,4 +127,3 @@ export {
   onCapacityChange,
   onRoomNumberChange
 };
-
