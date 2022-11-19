@@ -1,6 +1,6 @@
 import {
   adForm
-} from './forms';
+} from './forms.js';
 
 // минимальная цена от типа жилья
 const MIN_PRICE_OF_TYPE = {
