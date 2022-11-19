@@ -24,7 +24,7 @@ const guestsToRooms = {
   2: ['1', '2'],
   3: ['3'],
 };
-const maxPrice=100000;
+const maxPrice = 100000;
 // Переменная элемента количества мест, которая находится в форме и имеет соответствующее name
 const capacityElement = adForm.querySelector('#capacity');
 // Переменная элемента количества комнат, которая находится в форме и имеет соответствующее name
@@ -66,7 +66,6 @@ const onRoomNumberChange = () => {
   pristine.validate(capacityElement);
   pristine.validate(roomNumberElement);
 };
-
 // Пристин отработка валидации 
 pristine.addValidator(
   capacityElement,
