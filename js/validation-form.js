@@ -1,5 +1,5 @@
 import {
-  adForm, adFormFieldsets
+  adForm
 } from './forms.js';
 
 // минимальная цена от типа жилья
@@ -110,7 +110,6 @@ const getTimeOutChange = () => {
   timeOutForm.value = timeinForm.value;
 };
 
-
 // События которые происходят с элементами формы
 capacityElement.addEventListener('change', onCapacityChange);
 roomNumberElement.addEventListener('change', onRoomNumberChange);
@@ -118,7 +117,7 @@ typeForm.addEventListener('change', getTypeChange);
 priceForm.addEventListener('input', getPriceChange);
 timeinForm.addEventListener('change', getTimeOutChange);
 timeOutForm.addEventListener('change', getTimeInChange);
-
+//Проверка валидации перед отправкой формы
 adForm.addEventListener('submit', (event) => {
   if(!pristine.validate()) {
     pristine.getErrors();
