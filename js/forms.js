@@ -40,6 +40,4 @@ const activePage = () => {
 
 activePage();
 
-export { notactivePage, activePage };
-
-
+export { notactivePage, activePage, adForm };
