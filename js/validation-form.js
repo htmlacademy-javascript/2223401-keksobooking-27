@@ -1,5 +1,5 @@
 import {
-  adForm
+  adForm, adFormFieldsets
 } from './forms.js';
 
 // минимальная цена от типа жилья
@@ -66,6 +66,7 @@ const onRoomNumberChange = () => {
   pristine.validate(capacityElement);
   pristine.validate(roomNumberElement);
 };
+
 // Пристин отработка валидации
 pristine.addValidator(
   capacityElement,
@@ -118,12 +119,17 @@ priceForm.addEventListener('input', getPriceChange);
 timeinForm.addEventListener('change', getTimeOutChange);
 timeOutForm.addEventListener('change', getTimeInChange);
 
-
+adForm.addEventListener('submit', (event) => {
+  if(!pristine.validate()) {
+    pristine.getErrors();
+    event.preventDefault();
+  }
+});
 export {
   getTypeChange,
   getPriceChange,
   getTimeInChange,
   getTimeOutChange,
   onCapacityChange,
-  onRoomNumberChange
+  onRoomNumberChange,
 };
