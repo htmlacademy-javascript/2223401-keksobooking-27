@@ -24,6 +24,7 @@ const guestsToRooms = {
   2: ['1', '2'],
   3: ['3'],
 };
+
 const maxPrice = 100000;
 // Переменная элемента количества мест, которая находится в форме и имеет соответствующее name
 const capacityElement = adForm.querySelector('#capacity');
@@ -37,7 +38,13 @@ const priceForm = adForm.querySelector('#price');
 const timeinForm = adForm.querySelector('#timein');
 //Переменная время выезда
 const timeOutForm = adForm.querySelector('#timeout');
-
+const sliderForm = adForm.querySelector('.ad-form__slider');
+const SliderConfig = {
+  MIN: 0,
+  MAX: 100000,
+  START: priceForm.placeholder,
+  STEP: 1,
+};
 // Пристин, присваиваем классы
 const pristine = new Pristine(
   adForm,
@@ -48,6 +55,29 @@ const pristine = new Pristine(
   },
   true
 );
+noUiSlider.create(sliderForm, {
+  range: {
+    min: SliderConfig.MIN,
+    max: SliderConfig.MAX,
+  },
+  start: SliderConfig.START,
+  step: SliderConfig.STEP,
+  connect: 'lower',
+  format: {
+    to: function (value) {
+      return value.toFixed(0);
+    },
+    form: function(value) {
+      return value;
+    },
+    from: function(value) {
+      return parseFloat(value);
+    },
+  },
+});
+sliderForm.noUiSlider.on('update', () => {
+  priceForm.value = sliderForm.noUiSlider.get();
+});
 // Валидация количества мест
 const validateCapacity = () =>
   roomsToGuests[roomNumberElement.value].includes(capacityElement.value);
