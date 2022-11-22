@@ -1,4 +1,4 @@
 import { createMarkerGroup } from './map.js';
 import { getAdverts } from './data.js';
-
-createMarkerGroup(getAdverts);
+const ads = getAdverts();
+createMarkerGroup(ads);
