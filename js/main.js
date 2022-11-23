@@ -1,3 +1,2 @@
-import './ads.js';
-import './forms.js';
 import './validation-form.js';
+import './filters.js';

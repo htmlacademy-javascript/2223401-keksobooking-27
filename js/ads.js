@@ -1,7 +1,3 @@
-import {
-  getAdverts
-} from './data.js';
-
 const TYPES_OF_HOUSE = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
@@ -76,11 +72,6 @@ const provideAd = (element) => {
 
   return card;
 };
-
-// Отрисовка, начиная с [0] сгенерированного DOM-элемента в блок #map-canvas
-const map = document.querySelector('#map-canvas');
-const adv = getAdverts();
-map.append(provideAd(adv[0]));// или appendChild
 
 export {
   provideAd

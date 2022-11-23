@@ -63,7 +63,7 @@ const createAdvert = () => {
     offer: {
       title: getRandomArrayElement(title),
       address: `${randomx}, ${randomy}`,
-      price: getRandomPositiveInteger(1000, 100000000),
+      price: getRandomPositiveInteger(0, 100000),
       type: getRandomArrayElement(type),
       rooms: getRandomPositiveInteger(1, 15),
       guests: getRandomPositiveInteger(1, 50),
