@@ -134,5 +134,5 @@ const renderCard = ({
   return card;
 };
 export {
-  renderCard 
+  renderCard
 };

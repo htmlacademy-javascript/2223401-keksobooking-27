@@ -11,14 +11,18 @@ import {
 import {
   showAlert
 } from './show-alert.js';
-
-
+import {
+  checkAllFilters,
+  changeFilters
+} from './filters.js';
+import {
+  debounce
+} from './util.js';
 const L = window.L;
 const CENTER_TOKYO = {
   lat: 35.69034,
   lng: 139.75175,
 };
-
 const ZOOM_MAP = 12;
 const SIMILAR_AD_COUNT = 10;
 const POSITION_TOKYO = {
@@ -48,9 +52,9 @@ const LeafletParameters = {
 
 const map = L.map('map-canvas');
 
-const getMap = (callBackFunction) => {
+const getMap = (cb) => {
   map.on('load', () => {
-    callBackFunction();
+    cb();
   })
     .setView(
       CENTER_TOKYO,
@@ -59,8 +63,8 @@ const getMap = (callBackFunction) => {
   // добавление open source изображения на созданную карту
   L.tileLayer(
     LeafletParameters.TILE_LAYER, {
-    attribution: LeafletParameters.ATTRIBUTION,
-  },
+      attribution: LeafletParameters.ATTRIBUTION,
+    },
   ).addTo(map);
 };
 
@@ -76,28 +80,44 @@ const mainPin = L.marker(
 
 mainPin.addTo(map);
 
+const markers = [];
 
 // Создание меток с объявлениями
-const createPinGroup = (places) => {
-  places.forEach((ad) => {
-    const marker = L.marker({
-      lat: ad.location.lat,
-      lng: ad.location.lng,
-    }, {
-      icon: PIN_AD,
-    });
-
-    marker.addTo(map).bindPopup(renderCard(ad), // привязывает балун-объявление к метке
-      {
-        keepInView: true, //карта автоматически перемещается, если всплывающий балун-объявление не помещается и вылезает за границы
-      });
+const addPinOnMap = (place) => {
+  const marker = L.marker({
+    lat: place.location.lat,
+    lng: place.location.lng,
+  }, {
+    icon: PIN_AD,
   });
+
+  marker.addTo(map).bindPopup(renderCard(place), // привязывает балун-объявление к метке
+    {
+      keepInView: true, //карта автоматически перемещается, если всплывающий балун-объявление не помещается и вылезает за границы
+    },
+  );
+  markers.push(marker);
+};
+
+// Отображение меток на карте не более 10 штук
+const renderPins = (places) => {
+  places.slice(0, SIMILAR_AD_COUNT).forEach((place) => {
+    addPinOnMap(place);
+  });
+};
+
+const removePins = () => {
+  markers.forEach((marker) => marker.remove());
 };
 
 getMap(() => {
   activateAd(); // При успешной загрузке карты форма "Ваше объявление" переключается в активное состояние
-  getData((json) => {
-    createPinGroup(json.slice(0, SIMILAR_AD_COUNT));
+  getData((places) => {
+    renderPins(places);
+    changeFilters(debounce(() => {
+      removePins();
+      renderPins(checkAllFilters(places));
+    }));
     activateMapFilter(); // При успешной загрузке карты фильтр для карты переключается в активное состояние
   }, (error) => showAlert(error));
 });
@@ -107,8 +127,7 @@ export {
   map,
   CENTER_TOKYO,
   ZOOM_MAP,
-  createPinGroup
+  addPinOnMap,
+  renderPins,
+  removePins
 };
-
-
-
