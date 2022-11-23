@@ -1,6 +1,5 @@
 import { adForm, activePage } from './forms.js';
 import { provideAd } from './ads.js';
-//import { getAdverts } from './data.js';
 const COORDINATE_ROUNDING = 5;
 const ZOOM_MAP = 12;
 
@@ -94,41 +93,7 @@ const createPinAd = (ad, layer = map) => {
     );
   return marker;
 };
-/*const createPinAd = (offers) => {
- offers.forEach((offer)=> {
-    const marker=L.marker(
-        {
-            lat:offer.location.lat,
-            lng:offer.location.lng,
-        },
-        {
-            icon: PIN_AD
-        }
-    );
-    marker.addTo(markerGroup).bindPopup(provideAd(offer)),
-  });
-};
-const createMarkerGroup = (offers) =>{
-    markerGroup/clearLayers();
-    createAdPinMarkers(offers.slice(0, OFFERS_COUNT));
 
-};*/
-
-/*const createMarkerGroup = getAdverts().forEach((point) => { // getAdverts Функция генерации 10-ти случайных объявлений
-  const {lat, lng} = point.location;
-  const marker = L.marker(
-    {
-      lat: point.location.lat,
-      lng: point.location.lng,
-    },
-    {
-      icon: PIN_AD,
-    },
-  );
-
-  marker.addTo(map)
-    .bindPopup(provideAd(point)); // привяжем к каждой нашей метке балун bindPopup(), чтобы по клику на неё показывалась информация о месте
-});*/
 //Создание слоя с группой меток
 const createMarkerGroup = ads => {
   const markerGroup = L.layerGroup().addTo(map);
