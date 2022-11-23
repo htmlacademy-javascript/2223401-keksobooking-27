@@ -1,43 +1,48 @@
-const mapFormFilters = document.querySelector('.map__filters');
-const mapFormSelects = mapFormFilters.querySelectorAll('select');
-const mapFormFieldset = mapFormFilters.querySelector('fieldset');
+// dry код (form.js - строки 38 и 39)!!!!!!!
+const filterForm = document.querySelector('.map__filters');
 const adForm = document.querySelector('.ad-form');
-const adFormFieldsets = adForm.querySelectorAll('fieldset');
+// fieldset и select в формах ".ad-form" и ".map__filters"
+const mapFormBlocks = filterForm.children;
+const adFormBlocks = adForm.children;
 
-// Неактивная страница
-const notactivePage = () => {
-  mapFormFilters.classList.add('map__filters--disabled');
-  adForm.classList.add('ad-form--disabled');
-
-  mapFormSelects.forEach((element) => {
+// Блокировка полей в формах
+const setDisabled = (elements) => {
+  for (const element of elements) {
     element.disabled = true;
-  });
-
-  mapFormFieldset.disabled = true;
-
-  adFormFieldsets.forEach((element) => {
-    element.disabled = true;
-  });
+  }
 };
 
-notactivePage();
+// Неактивное состояние страницы: формы "Ваше объявление" и фильтра для карты
+const disablePage = () => {
+  filterForm.classList.add('map__filters--disabled');
+setDisabled(mapFormBlocks);
+adForm.classList.add('ad-form--disabled');
+setDisabled(adFormBlocks);
+};
 
-// Активная страницы
-const activePage = () => {
-  mapFormFilters.classList.remove('map__filters--disabled');
+disablePage(); // по умолчанию страница выключена до загрузки карты
+
+// Активация полей в формах
+const setEnabled = (elements) => {
+  for (const element of elements) {
+    element.disabled = false;
+  }
+};
+
+// Активное состояние формы "Ваше объявление"
+const activateAd = () => {
   adForm.classList.remove('ad-form--disabled');
-
-  mapFormSelects.forEach((element) => {
-    element.disabled = false;
-  });
-
-  mapFormFieldset.disabled = false;
-
-  adFormFieldsets.forEach((element) => {
-    element.disabled = false;
-  });
+  setEnabled(adFormBlocks);
 };
 
-activePage();
+// Активное состояние фильтра для карты
+const activateMapFilter = () => {
+  filterForm.classList.remove('map__filters--disabled');
+  setEnabled(mapFormBlocks);
+};
 
-export { notactivePage, activePage, adForm };
+export {
+  disablePage, 
+  activateAd,
+  activateMapFilter
+ };
