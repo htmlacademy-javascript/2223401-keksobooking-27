@@ -1,5 +1,6 @@
 import { adForm, activePage } from './forms.js';
 import { provideAd } from './ads.js';
+//import { getAdverts } from './data.js';
 const COORDINATE_ROUNDING = 5;
 const ZOOM_MAP = 12;
 
@@ -80,24 +81,56 @@ const resetMainPin = (marker) => {
 const getResetForm = () => {
   resetMainPin(mainPin);
 };
-
+// Возвращает кнопку на исходные координаты при нажатии кнопки очистить, слушатель события
 resetButton.addEventListener('click', getResetForm);
 
 // Создание метки с объявлением
 const createPinAd = (ad, layer = map) => {
   const marker = L.marker(ad.location, { icon: PIN_AD });
-  marker
-    .addTo(layer)
-    .bindPopup(provideAd(ad), // привязывает балун-объявление к метке
+  marker.addTo(layer).bindPopup(provideAd(ad), // привязывает балун-объявление к метке
       {
         keepInView: true, //карта автоматически перемещается, если всплывающий балун-объявление не помещается и вылезает за границы
       },
     );
   return marker;
 };
+/*const createPinAd = (offers) => {
+ offers.forEach((offer)=> {
+    const marker=L.marker(
+        {
+            lat:offer.location.lat,
+            lng:offer.location.lng,
+        },
+        {
+            icon: PIN_AD
+        }
+    );
+    marker.addTo(markerGroup).bindPopup(provideAd(offer)),
+  });
+};
+const createMarkerGroup = (offers) =>{
+    markerGroup/clearLayers();
+    createAdPinMarkers(offers.slice(0, OFFERS_COUNT));
 
-// Создание слоя с группой меток
-const createMarkerGroup = (ads) => {
+};*/
+
+/*const createMarkerGroup = getAdverts().forEach((point) => { // getAdverts Функция генерации 10-ти случайных объявлений
+  const {lat, lng} = point.location;
+  const marker = L.marker(
+    {
+      lat: point.location.lat,
+      lng: point.location.lng,
+    },
+    {
+      icon: PIN_AD,
+    },
+  );
+
+  marker.addTo(map)
+    .bindPopup(provideAd(point)); // привяжем к каждой нашей метке балун bindPopup(), чтобы по клику на неё показывалась информация о месте
+});*/
+//Создание слоя с группой меток
+const createMarkerGroup = ads => {
   const markerGroup = L.layerGroup().addTo(map);
   ads.forEach((ad) => createPinAd(ad, markerGroup));
   return markerGroup;
