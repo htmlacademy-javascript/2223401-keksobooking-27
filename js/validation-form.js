@@ -13,10 +13,6 @@ import {
   showSuccessModal,
   showErrorModal
 } from './popup.js';
-import {
-  avatarPreviewForm,
-  photoPreviewForm
-} from './forms.js';
 
 // минимальная цена от типа жилья
 const MIN_PRICE_OF_TYPE = {
@@ -187,16 +183,10 @@ mainPin.on('move', (evt) => {
   getAddressCoordinates(evt.target);
 });
 
-const resetPictures = () => {
-  avatarPreviewForm.src = IMG_DEFAULT.SRC;
-  photoPreviewForm.src = IMG_DEFAULT.SRC;
-};
-
 // Форма и карта переходят в изначальное состояние
 const onResetForm = () => {
   adForm.reset();
   filterForm.reset();
-  resetPictures();
   const pricePlaceholder = '1000';
   priceForm.placeholder = pricePlaceholder;
   mainPin.setLatLng(
@@ -211,7 +201,7 @@ const onResetForm = () => {
 // Нажатие на кнопку "очистить" (reset-форма)
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
-  setDefaultState();
+  onResetForm();
 });
 
 // Отправить объявления по кнопке "опубликовать" (submit-форма)
