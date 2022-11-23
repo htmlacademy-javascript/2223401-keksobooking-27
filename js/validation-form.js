@@ -1,6 +1,19 @@
+import {  
+  mainPin,
+  map,
+  CENTER_TOKYO,
+  ZOOM_MAP
+} from './map.js';
+
 import {
-  adForm
-} from './forms.js';
+  sendData
+} from './server.js';
+
+import {
+  showSuccessModal,
+  showErrorModal
+} from './popup.js';
+
 
 // минимальная цена от типа жилья
 const MIN_PRICE_OF_TYPE = {
@@ -26,6 +39,9 @@ const guestsToRooms = {
 };
 
 const maxPrice = 100000;
+const COORDINATE_ROUNDING = 5;
+const filterForm = document.querySelector('.map__filters');
+const adForm = document.querySelector('.ad-form');
 // Переменная элемента количества мест, которая находится в форме и имеет соответствующее name
 const capacityElement = adForm.querySelector('#capacity');
 // Переменная элемента количества комнат, которая находится в форме и имеет соответствующее name
@@ -34,10 +50,11 @@ const roomNumberElement = adForm.querySelector('#room_number');
 const typeForm = adForm.querySelector('#type');
 //Переменная цена
 const priceForm = adForm.querySelector('#price');
-//Переменная время заезда
 const timeinForm = adForm.querySelector('#timein');
 //Переменная время выезда
 const timeOutForm = adForm.querySelector('#timeout');
+const addressForm = adForm.querySelector('#address');
+const resetButton = adForm.querySelector('.ad-form__reset');
 const sliderForm = adForm.querySelector('.ad-form__slider');
 const SliderConfig = {
   MIN: 0,
@@ -154,11 +171,47 @@ adForm.addEventListener('submit', (event) => {
     event.preventDefault();
   }
 });
-export {
-  getTypeChange,
-  getPriceChange,
-  getTimeInChange,
-  getTimeOutChange,
-  onCapacityChange,
-  onRoomNumberChange,
+// Передача координат главной метки в поле "Адрес (координаты)"
+addressForm.readOnly = true;
+const getAddressCoordinates = (marker) => {
+  const lat = marker.getLatLng().lat.toFixed(COORDINATE_ROUNDING);
+  const lng = marker.getLatLng().lng.toFixed(COORDINATE_ROUNDING);
+  addressForm.value = `${lat} ${lng}`;
 };
+// Получение изначальное значение поля с координатами центра Токио
+getAddressCoordinates(mainPin);
+
+// Определение координат при передвижения метки по карте
+mainPin.on('move', (evt) => {
+  getAddressCoordinates(evt.target);
+});
+
+// Форма и карта переходят в изначальное состояние
+const setDefaultState = () => {
+  adForm.reset();
+  filterForm.reset();
+  mainPin.setLatLng(
+    CENTER_TOKYO,
+  );
+  map.setView(
+    CENTER_TOKYO,
+    ZOOM_MAP);
+  getAddressCoordinates(mainPin);
+};
+
+// Нажатие на кнопку "очистить" (reset-форма)
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  setDefaultState();
+});
+
+// Отправить объявления по кнопке "опубликовать" (submit-форма)
+adForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const formData = new FormData(evt.target);
+  sendData(() => {
+    showSuccessModal();
+    setDefaultState();
+  }, showErrorModal, formData);
+});
+
