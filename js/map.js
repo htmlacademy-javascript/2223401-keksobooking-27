@@ -87,10 +87,10 @@ resetButton.addEventListener('click', getResetForm);
 const createPinAd = (ad, layer = map) => {
   const marker = L.marker(ad.location, { icon: PIN_AD });
   marker.addTo(layer).bindPopup(provideAd(ad), // привязывает балун-объявление к метке
-      {
-        keepInView: true, //карта автоматически перемещается, если всплывающий балун-объявление не помещается и вылезает за границы
-      },
-    );
+    {
+      keepInView: true, //карта автоматически перемещается, если всплывающий балун-объявление не помещается и вылезает за границы
+    },
+  );
   return marker;
 };
 
