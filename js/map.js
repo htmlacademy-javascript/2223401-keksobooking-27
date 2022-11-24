@@ -26,8 +26,8 @@ const CENTER_TOKYO = {
 const ZOOM_MAP = 12;
 const SIMILAR_AD_COUNT = 10;
 const POSITION_TOKYO = {
-  lat: 35.681729,
-  lng: 139.753927,
+  lat: 35.677493,
+  lng: 139.727562, 35.
 };
 
 // Главная метка
