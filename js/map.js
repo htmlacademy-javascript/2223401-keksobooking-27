@@ -27,7 +27,7 @@ const ZOOM_MAP = 12;
 const SIMILAR_AD_COUNT = 10;
 const POSITION_TOKYO = {
   lat: 35.677493,
-  lng: 139.727562, 35.
+  lng: 139.727562,
 };
 
 // Главная метка
