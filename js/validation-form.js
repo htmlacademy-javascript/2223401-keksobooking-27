@@ -1,4 +1,4 @@
-import {  
+import {
   mainPin,
   map,
   CENTER_TOKYO,
@@ -13,7 +13,6 @@ import {
   showSuccessModal,
   showErrorModal
 } from './popup.js';
-
 
 // минимальная цена от типа жилья
 const MIN_PRICE_OF_TYPE = {
@@ -38,7 +37,6 @@ const guestsToRooms = {
   3: ['3'],
 };
 
-const maxPrice = 100000;
 const COORDINATE_ROUNDING = 5;
 const filterForm = document.querySelector('.map__filters');
 const adForm = document.querySelector('.ad-form');
@@ -132,15 +130,14 @@ const getTypeChange = () => {
   priceForm.min = MIN_PRICE_OF_TYPE[typeForm.value];
 };
 // Извещения об указании допустимой цены в поле «Цена за ночь»
-const getPriceChange = () => {
-  const price = priceForm.value;
-  const type = typeForm.value;
-  const minPrice = MIN_PRICE_OF_TYPE[type];
-
-  if (price < minPrice) {
-    priceForm.setCustomValidity(`Стоимость должна быть не ниже ${minPrice}`);
-  } else if (price > maxPrice) {
-    priceForm.setCustomValidity(`Стоимость должна быть не выше ${maxPrice}`);
+const getPriceChange = (evt) => {
+  const target = evt.target;
+  if (target.validity.rangeUnderflow) {
+    priceForm.setCustomValidity(`Укажите стоимость не ниже ${target.min}`);
+  } else if (target.validity.rangeOverflow) {
+    priceForm.setCustomValidity(`Укажите стоимость не выше ${target.max}`);
+  } else if (target.validity.valueMissing) {
+    priceForm.setCustomValidity('Обязательное поле для заполнения!');
   } else {
     priceForm.setCustomValidity('');
   }
@@ -187,9 +184,11 @@ mainPin.on('move', (evt) => {
 });
 
 // Форма и карта переходят в изначальное состояние
-const setDefaultState = () => {
+const onResetForm = () => {
   adForm.reset();
   filterForm.reset();
+  const pricePlaceholder = '1000';
+  priceForm.placeholder = pricePlaceholder;
   mainPin.setLatLng(
     CENTER_TOKYO,
   );
@@ -202,7 +201,7 @@ const setDefaultState = () => {
 // Нажатие на кнопку "очистить" (reset-форма)
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
-  setDefaultState();
+  onResetForm();
 });
 
 // Отправить объявления по кнопке "опубликовать" (submit-форма)
@@ -211,7 +210,7 @@ adForm.addEventListener('submit', (evt) => {
   const formData = new FormData(evt.target);
   sendData(() => {
     showSuccessModal();
-    setDefaultState();
+    onResetForm();
   }, showErrorModal, formData);
 });
 
